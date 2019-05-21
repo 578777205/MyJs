@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js动态创建星星</title>
+    <style>
+        	*{
+				padding: 0;
+				margin: 0
+			}
+            html,body{
+            	height: 100%;
+            	background:#000;
+            }
+			body img{position:absolute;}
+    </style>
+
+</head>
+<body>
+    <script>
+        window.onload=function(){
+            var winH=document.documentElement.clientHeight;
+            var winW=document.documentElement.clientWidth;
+            setInterval(function(){
+            var img = document.createElement("img");
+			img.setAttribute('src','star.gif')
+			var size = parseInt(Math.random()*25) + 5;
+			var left = parseInt(Math.random()*(winW-size));
+			var top = parseInt(Math.random()*(winH-size));
+			
+			img.style.left = left + "px";
+			img.style.top = top + "px";
+			img.style.width = img.style.height = size + "px";
+			img.addEventListener("click",function(event){
+                	event.stopPropagation();
+                    this.parentNode.removeChild(this)
+                },false)
+			document.body.appendChild(img);
+            setInterval(function (){
+                if(img.style.visibility=="visible")
+                img.style.visibility="hidden";
+                else
+                img.style.visibility="visible";
+            } ,500);   
+            },1000)
+        }
+    
+
+
+    </script>
+</body>
+</html>
