@@ -97,7 +97,7 @@ function createtable(i){
     
          deleteTd.innerHTML = '<a href="#">删除</a>';
          tr.appendChild(deleteTd);
-         
+         tr.classList.add('animated','slideInLeft');//滑入动画
          cache.appendChild(tr); //DOM操作优化
 
     tbody.appendChild(cache);
