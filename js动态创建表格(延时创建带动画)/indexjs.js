@@ -122,5 +122,5 @@ function createtable(i){
     
 }
 
-for(var t=0;t<10;t++)
+for(var t=0;t<json.length;t++)
 setTimeout("createtable("+ t+ ")",1000*t);
