@@ -1,0 +1,62 @@
+*{
+    margin:0;
+    padding: 0;
+}
+body{
+    background-color: rgb(230, 230, 230);
+    font-size: 16px;
+}
+h1{
+    color: #2196f3;
+    text-align: center;
+}
+hr{
+    margin: 1em 0;
+}
+#container{
+    margin-left: 2em;
+}
+#container #input{
+    height: 2em;
+    margin-right: 3em;
+}
+#container button{
+background-color:#2196f3; 
+border: none;
+color: white;
+padding: 15px 32px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+}
+#list{
+    margin: 2em 2em;
+}
+ul{
+    list-style-type: none;
+}
+ul li{
+    margin-top:1em;
+    border:1px solid #b5b5b5;
+    box-shadow: 10px 10px 5px #888888;
+    height:80px;width:450px;
+    position: relative;
+}
+ul li .time{
+    position:absolute  ;
+    right: 15%;
+    bottom: 0%;
+}
+ul li .del{
+    position:absolute  ;
+    right: 5%;
+    bottom: 0%;
+background-color:#8c8e90; 
+border: none;
+color: white;
+padding: 5px 5px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+}
