@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>飞机大战</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            background-image: url('img/background.png');
+            display: block;
+            margin: 10px auto;
+            height: 700px;
+            width: 480px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        span {
+            float: left;
+            margin: 0 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <span>操作提示</span>
+    <div id="main"></div>
+
+    <script>
+        var mainObj = document.getElementById("main");
+        var enemy1Array = [];
+        var bulletArray = [];
+        var LeftStatues = false,
+            RightStatues = false,
+            TopStatues = false,
+            BottomStatues = false;
+
+
+        //创建敌方小飞机1对象
+        function enemy1(imgsrc, x, y, speed) {
+            //属性
+            this.imgNode = document.createElement("img");
+            this.imgsrc = imgsrc;
+            this.x = x;
+            this.y = y;
+            this.isCrashed = false;
+            this.expT = 16;
+            this.speed = speed;
+            //方法
+            this.init = function () {
+                this.imgNode.src = this.imgsrc;
+                this.imgNode.style.position = "absolute";
+                this.imgNode.style.left = x + "px";
+                this.imgNode.style.top = y + "px";
+                mainObj.appendChild(this.imgNode);
+
+            }
+            this.init(); //初始化敌方小飞机
+            this.move = function () {
+                this.imgNode.style.top = parseInt(this.imgNode.style.top) + this.speed + "px";
+            }
+        }
+
+        function createEnemy1() { //创建敌方小飞机
+            var enemyplane = new enemy1("img/enemy1.png", parseInt(Math.random() * 423), -150, parseInt(Math.random() *
+                6) + 3);
+            enemy1Array.push(enemyplane);
+        }
+
+        function enemy1Move() {
+            for (var i = 0; i < enemy1Array.length; i++) {
+                enemy1Array[i].move();
+                if (parseInt(enemy1Array[i].imgNode.style.top) >= 700 || enemy1Array[i].isCrashed == true) {
+                    enemy1Array[i].expT--;
+                    if (enemy1Array[i].expT == 0) {
+                        mainObj.removeChild(enemy1Array[i].imgNode);
+                        enemy1Array.splice(i, 1);
+                    }
+
+                }
+            }
+
+        }
+
+        setInterval(createEnemy1, 1000);
+        setInterval(enemy1Move, 25);
+
+
+
+        //玩家飞机对象
+        function playerPlane(imgsrc, x, y, speed) {
+            this.imgNode = document.createElement("img");
+            this.imgsrc = imgsrc;
+            this.x = x;
+            this.y = y;
+            this.speed = speed;
+
+            this.init = function () {
+                this.imgNode.src = this.imgsrc;
+                this.imgNode.style.position = "absolute";
+                this.imgNode.style.left = x + "px";
+                this.imgNode.style.top = y + "px";
+                mainObj.appendChild(this.imgNode);
+            }
+            this.init();
+            this.moveL = function () {
+                this.imgNode.style.left = parseInt(this.imgNode.style.left) - this.speed + "px";
+            }
+            this.moveR = function () {
+                this.imgNode.style.left = parseInt(this.imgNode.style.left) + this.speed + "px";
+            }
+            this.moveT = function () {
+                this.imgNode.style.top = parseInt(this.imgNode.style.top) - this.speed + "px";
+            }
+            this.moveB = function () {
+                this.imgNode.style.top = parseInt(this.imgNode.style.top) + this.speed + "px";
+            }
+            this.shoot = function () { //射出子弹
+
+                var bullet = new ClassBullet("img/bullet1.png", parseInt(this.imgNode.style.left) + 51, parseInt(
+                    this.imgNode.style.top) - 11, 15);
+                bulletArray.push(bullet);
+            }
+
+        }
+
+        var player = new playerPlane("img/player.gif", 100, 550, 10);
+        document.body.onkeydown = function () {
+            /* console.log(event); */
+            if (event.keyCode == 37) {
+                LeftStatues = true;
+            }
+            if (event.keyCode == 38) {
+                TopStatues = true;
+            }
+            if (event.keyCode == 39) {
+                RightStatues = true;
+            }
+            if (event.keyCode == 40) {
+                BottomStatues = true;
+            }
+            if (event.keyCode == 70) {
+                player.shoot();
+            }
+        }
+        document.body.onkeyup = function () {
+            if (event.keyCode == 37) {
+                LeftStatues = false;
+            }
+            if (event.keyCode == 38) {
+                TopStatues = false;
+            }
+            if (event.keyCode == 39) {
+                RightStatues = false;
+            }
+            if (event.keyCode == 40) {
+                BottomStatues = false;
+            }
+        }
+
+        function CtrlMove() {
+            if (LeftStatues == true) {
+                player.moveL();
+            }
+            if (TopStatues == true) {
+                player.moveT();
+            }
+            if (RightStatues == true) {
+                player.moveR();
+            }
+            if (BottomStatues == true) {
+                player.moveB();
+            }
+            if (parseInt(player.imgNode.style.left) < -100) {
+                player.imgNode.style.left = "480px";
+            }
+            if (parseInt(player.imgNode.style.left) > 480) {
+                player.imgNode.style.left = "-100px";
+            }
+            if (parseInt(player.imgNode.style.top) < -120) {
+                player.imgNode.style.top = "700px";
+            }
+            if (parseInt(player.imgNode.style.top) > 700) {
+                player.imgNode.style.top = "-120px";
+            }
+
+        }
+
+        setInterval(CtrlMove, 25);
+
+
+        //子弹对象
+        function ClassBullet(imgsrc, x, y, speed) {
+            //属性
+            this.imgNode = document.createElement("img");
+            this.imgsrc = imgsrc;
+            this.x = x;
+            this.y = y;
+            this.speed = speed;
+            //方法
+            this.init = function () {
+                this.imgNode.src = this.imgsrc;
+                this.imgNode.style.position = "absolute";
+                this.imgNode.style.left = x + "px";
+                this.imgNode.style.top = y + "px";
+                mainObj.appendChild(this.imgNode);
+
+            }
+            this.init(); //初始化
+            this.move = function () {
+                this.imgNode.style.top = parseInt(this.imgNode.style.top) - this.speed + "px";
+            }
+        }
+
+        function bulletMove() { //子弹移动
+            for (var i = 0; i < bulletArray.length; i++) {
+                bulletArray[i].move();
+                if (parseInt(bulletArray[i].imgNode.style.top) < -10) {
+                    mainObj.removeChild(bulletArray[i].imgNode);
+                    bulletArray.splice(i, 1);
+                }
+            }
+
+        }
+        setInterval(bulletMove, 25);
+
+
+
+
+        //碰撞与摧毁
+        function hitEnemy1() {
+            for (var i = 0; i < enemy1Array.length; i++) {
+                for (var j = 0; j < bulletArray.length; j++) {
+                    var plLeft = parseInt(enemy1Array[i].imgNode.style.left);
+                    var plTop = parseInt(enemy1Array[i].imgNode.style.top);
+                    var buLeft = parseInt(bulletArray[j].imgNode.style.left);
+                    var buTop = parseInt(bulletArray[j].imgNode.style.top);
+                    if (buLeft >= plLeft && buLeft <= plLeft + 57 && buTop >= plTop && buTop <= plTop + 43) {
+                        mainObj.removeChild(bulletArray[j].imgNode);
+                        bulletArray.splice(j, 1);
+                        enemy1Array[i].imgNode.src = "img/enemy1_down.gif";
+                        enemy1Array[i].isCrashed = true;
+                        //console.log("test!");
+                    }
+                }
+                
+            }
+
+        }
+        setInterval(hitEnemy1, 25);
+    </script>
+</body>
+
+</html>
