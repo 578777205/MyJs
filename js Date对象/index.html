@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Date对象</title>
+</head>
+<body>
+	<div id="time"></div>
+</body>
+
+<script>
+	var date = new Date();
+	console.log(date);
+
+    var times = Date.now() // +new Date()
+    
+    //console.log(times); //1557401352834
+   
+    // console.log(date.toLocaleString())
+    // console.log(date.valueOf()) //1557401352834
+
+    // console.log(date.toLocaleDateString())
+    // console.log(date.toLocaleTimeString())
+
+    console.log(date.getDate()) //当月多少号
+    console.log(date.getDay()) //星期几，注意周期日是 0 
+    console.log(date.getYear()) //从 1900 年 距离今年的时间数 119
+    
+    console.log(date.getFullYear())
+
+    console.log(date.getMonth()) //月份是重 0开始算的 0表示 1月
+
+    console.log(date.getHours()) 
+
+    console.log(date.getMinutes())
+
+    console.log(date.getSeconds())
+
+    function formatData() {
+            var formate = '';
+            var date = new Date();
+            var year = date.getFullYear();
+            var mouth = date.getMonth() + 1;
+            var day = date.getDate();
+            if (day < 9 && day > 0) {
+                day = '0' + day;
+            }
+            if (mouth < 9 && day > 0) {
+                mouth = '0' + mouth;
+            }
+            if (arguments.length === 1) {
+                formate = year + arguments[0] + mouth + arguments[0] + day;
+            } else if(arguments.length === 2) {
+                formate = year + arguments[0] + mouth + arguments[1] + day;
+            } else if (arguments.length === 3) {
+                formate = year + arguments[0] + mouth + arguments[1] + day + arguments[2];
+            } else if (!arguments.length) {
+                formate = year + '-' + mouth + '-' + day;
+            }
+            return formate;
+        }
+        document.getElementById("time").innerHTML=formatData();
+     
+
+</script>
+</html>
