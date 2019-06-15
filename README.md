@@ -1,2 +1,2 @@
 # js-learning
-L+学习作业提交库
+js作业和项目
