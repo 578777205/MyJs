@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图</title>
+
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    .container{
+        margin: 20px auto;
+        position: relative;     
+        width: 600px;height: 400px;
+        overflow: hidden;
+        box-shadow: 0 0 5px grey;                   
+    }
+    .wrap{
+        position: absolute;
+        
+        width: 4200px;
+        z-index: 1;
+    }
+    .wrap img{
+        float: left;
+        width: 600px;height: 400px;
+    }
+    .container .buttons{
+        position: absolute;
+        right: 35px;
+        bottom:20px;
+        z-index: 2;                
+    }
+    .container .buttons button{
+        background-color: #ffffff;
+        border: none;
+        width: 15px;height: 15px;
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 50%;
+        margin: 0 5px;
+        }
+    .container .buttons .buttonActived{
+        background-color: #777777;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="wrap" style="left: -600px">
+            <img src="img/5.jpg" alt="">
+            <img src="img/1.jpg" alt="">
+            <img src="img/2.jpg" alt="">
+            <img src="img/3.jpg" alt="">
+            <img src="img/4.jpg" alt="">
+            <img src="img/5.jpg" alt="">
+            <img src="img/1.jpg" alt="">
+        </div>
+        <div class="buttons">
+            <button type="button" class="buttonActived"></button>
+            <button type="button"></button>
+            <button type="button"></button>
+            <button type="button"></button>
+            <button type="button"></button>
+        </div>
+    </div>
+
+    <script>
+    var wrap=document.querySelector(".wrap"); 
+    var buttonArray=document.querySelectorAll(".buttons button");        
+    function MoveWrap(){
+
+        wrap.style.left=wrap.offsetLeft-600+"px";
+        for(let i=0;i<5;i++)
+        {
+            if(wrap.offsetLeft== -600-600*i){
+                for(let j=0;j<5;j++)
+                {
+                    buttonArray[j].className="";
+                }
+                buttonArray[i].className="buttonActived";
+            }
+        }
+        if(wrap.offsetLeft==-3600){
+            wrap.style.left="-600px";
+            buttonArray[0].className="buttonActived";
+            buttonArray[4].className="";
+        }
+        
+    }
+    setInterval(MoveWrap,2000);    
+    function AddEv(){
+              
+        for(var i=0;i<5;i++){
+            buttonArray[i].index=i;
+            buttonArray[i].addEventListener("click",function(){
+                wrap.style.left=-600-this.index*600+"px";
+                for(var j=0;j<5;j++)
+                {
+                    buttonArray[j].className="";
+                    buttonArray[this.index].classList.add("buttonActived");
+                }
+                //console.log(this.index);
+            },false);
+        }
+    }
+    AddEv();
+    </script>
+</body>
+</html>

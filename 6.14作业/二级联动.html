@@ -1,0 +1,50 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>二级联动和选项卡</title>
+
+     <style>
+     *{
+         margin: 0;
+         padding: 0;
+     }
+     select{
+         margin: 20px 10px;
+     }
+     </style>
+ </head>
+ <body>
+     <select id="s1">
+         <option value="">请选择</option>
+     </select>
+     <select id="s2">
+        <option value="">请选择</option>
+    </select>
+
+    <script>
+    var city={};
+    city["四川"]=["成都","绵阳","自贡"];
+    city["浙江"]=["杭州","宁波","温州"];
+    var s1=document.getElementById("s1");
+    var s2=document.getElementById("s2");
+    window.onload=function(){
+        for(let i in city){
+            s1.add(new Option(i,i));
+        
+        }
+    }
+    s1.onchange=function(){
+            s2.options.length=1;
+        for(let i in city[s1.value])
+        {
+            s2.add(new Option(city[s1.value][i],i));
+            s2.options[1].selected=true;
+        }
+
+    }
+    </script>
+ </body>
+ </html>

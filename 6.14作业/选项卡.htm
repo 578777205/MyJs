@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选项卡</title>
+</head>
+<style>
+	*{
+		margin: 0px;
+		padding:0px;
+	}
+	#showTab{
+		width: 750px;
+		height: 500px;
+		margin: 0 auto;
+		position: relative;
+		border: 1px solid #000;
+	}
+	#showTitle{
+		overflow: hidden;
+	}
+	ul{
+		list-style: none;
+	}
+	li{
+		width:100px;
+		height:40px;
+		line-height: 40px;
+		text-align: center;
+		cursor: position;
+		float:left;
+	}
+	.tabTitleNow{
+		color:white;
+		background-color: gray;		
+		border-width: 0px;
+		height: 42px;
+	}
+	.tabContent{
+		padding:10px;
+		width:730px;
+		height:438px;
+		display:none;
+		background-color: gray;
+	}
+</style>
+<body>
+	<div id="showTab">
+		<div id="showTitle">
+			<ul>
+				<li class="tabTitleNow">showA</li>
+				<li>showB</li>
+				<li>showC</li>
+			</ul>
+		</div>
+		<div class="tabContent" style="display:block">TabA</div>
+		<div class="tabContent">TabB</div>
+		<div class="tabContent">TabC</div>	
+	</div>
+	<script>
+		var liArray=document.getElementsByTagName("li");
+		var divArray=document.getElementsByClassName("tabContent");
+		for(let i=0;i<3;i++){
+			//console.log(liArray[i]);
+			liArray[i].addEventListener("click",function(){
+				for(let j=0;j<3;j++)
+				{
+					liArray[j].className="";
+					divArray[j].style="display:none";
+				}
+				liArray[i].className="tabTitleNow";
+				divArray[i].style="display:block";
+			},false);
+		}
+	</script>
+</body>
+</html>
